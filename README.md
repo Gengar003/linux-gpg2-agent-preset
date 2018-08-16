@@ -24,7 +24,29 @@ Just run `make run`.
 This will start up the Docker image and _try_ to start up a `gpg-agent` with the passphrase to the key preset. It will also configure `git` to use that key to sign.
 
 Feel free to follow either of the Approaches below to try to sign something.
-This repository will be present (via a Docker bind-mount) in your home directory.
+This repository will be present (via a Docker bind-mount) in your home directory:
+
+	~/git-personal/linux-gpg2-agent-preset (master) $ make run
+	docker run \
+			--rm \
+			--interactive \
+			--tty \
+			--volume="/Users/me/git-personal/linux-gpg2-agent-preset":/home/ubuntu/linux-gpg2-agent-preset \
+				linux-gpg2-agent-preset
+	/home/ubuntu/.gnupg/pubring.kbx
+	-------------------------------
+	sec   rsa4096/47625A42 2018-08-16 [SC]
+	uid         [ultimate] Dummy Key (This keypair was generated as part of an example repo; the private key and passphrase are known to the world.) <nobody@example.com>
+	ssb   rsa4096/58972FCE 2018-08-16 [E]
+	...
+	+ exec bash
+	ubuntu@3cab7eb59cd2:~$ ls -hal
+	total 16K
+	drwxr-xr-x  1 ubuntu root   4.0K Aug 16 02:16 .
+	drwxr-xr-x  1 root   root   4.0K Aug 16 00:58 ..
+	-rw-r--r--  1 ubuntu ubuntu   86 Aug 16 02:16 .gitconfig
+	drwx------  1 ubuntu root   4.0K Aug 16 02:16 .gnupg
+	drwxr-xr-x 10 ubuntu ubuntu  340 Aug 16 02:07 linux-gpg2-agent-preset
 
 Approaches
 ==========
