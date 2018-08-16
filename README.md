@@ -60,14 +60,6 @@ Simple
 4. Try to encrypt a file with `gpg2`
 	* `gpg2 --encrypt --sign --armor -r nobody@example.com linux-gpg2-agent-preset/README.md`
 
-### Expected
-
-File successfully encrypted
-
-### Actual
-
-`gpg2` interactively prompts for the GPG2 key's passphrase.
-
 `git`
 -----
 
@@ -81,14 +73,6 @@ File successfully encrypted
 		git add README.md
 		git commit -a -m 'signed commit'
 
-### Expected
-
-A signed commit is generated
-
-### Actual
-
-`git` interactively prompts for the GPG2 key's passphrase.
-
 Notes
 ==========
 
@@ -96,23 +80,3 @@ Notes
 	* UID: `47625A42`
 	* Passphrase: `correct horse battery staple`
 * `gpg2` and `gpg-agent` versions: [`docker/installers/apt-get.sh`](docker/installers/apt-get.sh)
-
-`gpg-agent` preset key validation
------
-
-The [internet says](https://unix.stackexchange.com/a/342461) that the way to validate if the `gpg-agent` has a passphrase set, is to run
-
-	echo "KEYINFO --no-ask <keygrip> Err Pmt Des" | gpg-connect-agent
-
-Initially, inside the Docker image the results of this look like:
-
-	S KEYINFO 39677A426BF7F41FEEAECF8340B6B825F820E5DE D - - - P - - -
-	OK
-
-After correctly answering the interactive passphrase prompt, that same command produces output like this:
-
-	S KEYINFO 39677A426BF7F41FEEAECF8340B6B825F820E5DE D - - 1 P - - -
-	OK
-
-So, I'm pretty sure that `/usr/lib/gnupg2/gpg-preset-passphrase` isn't actually working.
-
