@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-gpg-agent --version
 gpg2 --version
+gpg-agent --version
+/usr/lib/gnupg2/gpg-preset-passphrase --version
+
 gpg2 --list-secret-keys
 
 KEY_ID=${KEY_ID-47625A42}
